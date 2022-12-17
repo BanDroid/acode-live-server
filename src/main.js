@@ -4,21 +4,22 @@ const liveServer = require("live-server")
 class LiveServer {
 	constructor() {
 		this.options = {}
-		this.commands = [
-			{
+		this.commands = {
+			start: {
 				name: "start live-server",
 				description: "start live-server",
 				exec: this.startServer.bind(this),
 			},
-			{
+			stop: {
 				name: "stop live-server",
 				description: "stop live-server",
 				exec: this.stopServer.bind(this),
 			},
-		]
+		}
 	}
 	async init() {
-		editorManager.editor.commands.addCommands(this.commands)
+		editorManager.editor.commands.addCommand(this.commands.start)
+		editorManager.editor.commands.addCommand(this.commands.stop)
 	}
 
 	async startServer() {
