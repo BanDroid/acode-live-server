@@ -1,26 +1,50 @@
-import plugin from '../plugin.json';
+import plugin from "../plugin.json"
+const liveServer = require("live-server")
 
-class AcodePlugin {
+class LiveServer {
+	constructor() {
+		this.options = {}
+		this.commands = [
+			{
+				name: "start live-server",
+				description: "start live-server",
+				exec: this.startServer.bind(this),
+			},
+			{
+				name: "stop live-server",
+				description: "stop live-server",
+				exec: this.stopServer.bind(this),
+			},
+		]
+	}
+	async init() {
+		editorManager.editor.commands.addCommands(this.commands)
+	}
 
-  async init() {
+	async startServer() {
+		const server = liveServer.start(this.options)
+	}
 
-  }
+	async stopServer() {}
 
-  async destroy() {
-
-  }
+	async destroy() {
+		editorManager.editor.commands.removeCommands(commands)
+	}
 }
 
 if (window.acode) {
-  const acodePlugin = new AcodePlugin();
-  acode.setPluginInit(plugin.id, (baseUrl, $page, { cacheFileUrl, cacheFile }) => {
-    if (!baseUrl.endsWith('/')) {
-      baseUrl += '/';
-    }
-    acodePlugin.baseUrl = baseUrl;
-    acodePlugin.init($page, cacheFile, cacheFileUrl);
-  });
-  acode.setPluginUnmount(plugin.id, () => {
-    acodePlugin.destroy();
-  });
+	const liveServerPlugin = new LiveServer()
+	acode.setPluginInit(
+		plugin.id,
+		(baseUrl, $page, { cacheFileUrl, cacheFile }) => {
+			if (!baseUrl.endsWith("/")) {
+				baseUrl += "/"
+			}
+			liveServerPlugin.baseUrl = baseUrl
+			liveServerPlugin.init($page, cacheFile, cacheFileUrl)
+		}
+	)
+	acode.setPluginUnmount(plugin.id, () => {
+		liveServerPlugin.destroy()
+	})
 }
