@@ -1,10 +1,10 @@
 {
-	"name": "acode-plugin",
-	"version": "1.0.2",
-	"description": "Template for Acode plugin",
+	"name": "acode-plugin-liveserver",
+	"version": "1.0.0",
+	"description": "LiveServer plugin for Acode Editor",
 	"main": "dist/main.js",
-	"repository": "https://github.com/deadlyjack/acode-plugin.git",
-	"author": "Ajit <me@ajitkumar.dev>",
+	"repository": "https://github.com/BanDroid/acode-live-server.git",
+	"author": "BanDroid",
 	"license": "MIT",
 	"dependencies": {
 		"html-tag-js": "^1.1.22",
