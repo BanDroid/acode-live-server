@@ -1,27 +1,32 @@
 /* eslint-disable no-console */
-const { spawn } = require('child_process');
-const path = require('path');
+const { spawn } = require("child_process");
+const path = require("path");
 
-const webpack = spawn('npx.cmd', ['webpack', '--mode=development', '--watch'], { cwd: path.resolve(__dirname, '../') });
-
-webpack.on('error', (webpackError) => {
-  if (webpackError) {
-    console.error(webpackError);
-    process.exit(1);
-  }
+// const webpack = spawn("npx.cmd", ["webpack", "--mode=development", "--watch"], {
+// 	cwd: path.resolve(__dirname, "../"),
+// });
+const webpack = spawn("webpack", ["--mode=development", "--watch"], {
+	cwd: path.resolve(__dirname, "../"),
 });
 
-webpack.stdout.on('data', (chunk) => {
-  const stdout = chunk.toString();
-  console.log(stdout);
-  process.send(stdout);
+webpack.on("error", (webpackError) => {
+	if (webpackError) {
+		console.error(webpackError);
+		process.exit(1);
+	}
 });
 
-webpack.stdout.on('error', (error) => {
-  console.log(error);
+webpack.stdout.on("data", (chunk) => {
+	const stdout = chunk.toString();
+	console.log(stdout);
+	process.send(stdout);
 });
 
-webpack.stderr.on('data', (chunk) => {
-  const stderr = chunk.toString();
-  console.log(stderr);
+webpack.stdout.on("error", (error) => {
+	console.log(error);
+});
+
+webpack.stderr.on("data", (chunk) => {
+	const stderr = chunk.toString();
+	console.log(stderr);
 });
